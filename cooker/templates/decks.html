@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block cooker_content %}
+<h2>{{ user.username}}'s decks:</h2>
+<hr>
+{% if not current_user.is_anonymous %}
+<a class="btn btn-primary" href="{{ url_for('add_deck') }}" role="button">Add a Deck</a>
+<hr>
+{% endif %}
+{% if decks %}
+<div class="list-group">
+  {% for d in decks %}
+  <a href="{{ url_for('deck_detail', username=user.username, dpk=d.pk) }}" class="list-group-item flex-column align-items-start">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h4 class="mb-1">{{ d.name }}</h4>
+      <small>{{ d.legality }}</small>
+    </div>
+    <p class="mb-1">{{ d.description }}</p>
+  </a>
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

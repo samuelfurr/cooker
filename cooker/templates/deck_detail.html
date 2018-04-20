@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+
+
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/deck_detail.css') }}">
+{% endblock %}
+
+{% block cooker_content %}
+<div style="display:flex;justify-content:space-between;align-items:center;">
+  <h2>{{ deck.name }}</h2>
+  <div style="display:flex;justify-content:flex-end;align-items:center;">
+    <small style="margin-right:1.5em">{{ deck.legality }}</small>
+    {% if not current_user.is_anonymous %}
+    <button type="button" class="btn btn-primary" id="edit">Edit Deck</button>
+    {% endif %}
+  </div>
+</div>
+<p class="mb-1">{{ deck.description }}</p>
+<div class="deck-container">
+  <div class="edit-deck panel panel-default" id="edit_deck_form">
+    <div class="panel-heading">Add Card</div>
+    <div class="row" style="padding:1.5em;">
+      <div class="col-md-4" style="width:100%;">
+	<label for="card_name">Card Name</label>
+	<div class="input-group" style="width:100%;">
+	  <input type="text" class="form-control" id="card_name" aria-describedby="basic-addon3" style="margin-bottom:1.5em;">
+	</div>
+	<div style="width:30%;float:right;">
+	  <label for="card_count">Count</label>
+	  <div class="input-group">
+    	    <input type="text" class="form-control" id="card_count" aria-describedby="basic-addon3" style="margin-bottom:1.5em;">
+	  </div>
+	</div>
+	<div style="display:flex;justify-content:space-between;align-items:center;width:100%;">
+	  <button type="button" class="btn btn-danger" id="close">Done</button>
+	  <a class="btn btn-success" href="javascript:add_card('{{ deck.pk }}', '#card_name', '#card_count');" role="button">Add</a>
+	</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default" style="width:65%;">
+    <div class="panel-heading">Main Deck</div>
+    <div class="mdpanel">
+      <div class="multi-type-panel">
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Creatures</div>
+	  <table class="table" id="Creature">
+            {% for key, val in deck.creatures.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Creature');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Instants</div>
+	  <table class="table" id="Instant">
+            {% for key, val in deck.instants.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Instant');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Sorceries</div>
+	  <table class="table" id="Sorcery">
+            {% for key, val in deck.sorceries.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Sorcery');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+      </div>
+      <div class="multi-type-panel">
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Artifacts</div>
+	  <table class="table" id="Artifact">
+            {% for key, val in deck.artifacts.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Artifact');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Enchantments</div>
+	  <table class="table" id="Enchantment">
+            {% for key, val in deck.enchantments.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Enchantment');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Lands</div>
+	  <table class="table" id="Land">
+            {% for key, val in deck.lands.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Land');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+	<div class="cardpanel panel panel-default">
+	  <div class="panel-heading">Planeswalkers</div>
+	  <table class="table" id="Planeswalker">
+            {% for key, val in deck.planeswalkers.items() %}
+	    <tr id="row_{{ key }}">
+	      <td class="nametd"><span>{{ val[0].name }}</span></td>
+	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
+	      <td class="removetd">
+		{% if not current_user.is_anonymous %}
+		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Planeswalker');">
+		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+		</a>
+		{% endif %}
+	      </td>
+	    </tr>
+	    {% endfor %}
+	  </table>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="display:flex;flex-wrap:wrap;justify-content:left;align-items:flex-start;">
+  <div class="panel panel-default">
+    <div class="panel-heading">Sideboard</div>
+    <table class="table">
+      
+    </table>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript">
+    $(document).ready(function() {
+	$("#edit").click(function() {
+	    $("#edit_deck_form").slideToggle("fast");
+	});
+	$("#close").click(function() {
+	    $("#edit_deck_form").slideToggle("fast");
+	});
+	$('#card_name').autocomplete({
+	    source : function(request, response){
+		$.ajax({
+		    url : '{{ url_for("card_autocomplete") }}',
+		    data : {
+			q : request.term
+		    },
+		    success : function(data){
+			response(data[0]);
+		    }
+		});
+	    },
+            minLength : 3,
+	    open: function() {
+		$( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+	    },
+	    close: function() {
+		$( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+	    }
+	});
+    });
+
+function add_card(deckpk, cardBox, cardCount){
+    $.post("/add_card", {
+	dpk : deckpk,
+	card_name : $(cardBox).val(),
+	card_count : $(cardCount).val()
+    }).done(function(response) {
+	$(cardBox).val("");
+	$(cardCount).val("");
+	if(response['new'] == true){
+	    $c = $('<span>'+response['count']+'</span>');
+	    $c.attr('id', response['countid']);
+	    $a = $('<a></a>');
+	    $a.attr('href', 'javascript:remove_card('+"'{{ deck.pk }}'"+", '"+response['key']+"', '"+response['t']+"');");
+	    $s = $('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>');
+	    $t = $('<td></td>');
+	    $t.attr('class', 'removetd');
+	    $tr = $('<tr></tr>');
+	    $tr.attr('id', response['rowid']);
+	    if($(response['type']).find('tbody').length == 0){
+		$(response['type']).append('<tbody>');
+	    }
+	    $(response['type']+' tbody').append($tr.append($('<td>').append($('<span>').text(response['name'])),
+								 $('<td>').append($c),
+								 $t.append($a.append($s))));
+	}
+	else{
+	    console.log(response['countid']);
+	    $('#'+response['countid']).text(response['count']);
+	}
+    }).fail(function(){
+	alert("Error");
+    });
+}
+
+function remove_card(deckpk, cardpk, type){
+    $.post("/remove_card", {
+	dpk: deckpk,
+	cpk: cardpk,
+	ctype: type
+    }).done(function(response){
+	$(response['row']).remove();
+    }).fail(function(){
+	alert("Error");
+    });
+}
+	    
+</script>
+{% endblock %}

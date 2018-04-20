@@ -1,0 +1,49 @@
+.deck-container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:left;
+    align-items:flex-start;
+}
+
+.edit-deck{
+    display:none;
+    width:30%;
+    margin-right:5%;
+}
+
+.mdpanel {
+    display:flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding:1.5em;
+}
+
+.multi-type-panel{
+    display:flex;
+    flex-flow: column wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    padding:1.5em;
+    width: 50%;
+}
+
+.cardpanel{
+    width:100%;
+}
+
+.nametd{
+    width:80%;
+}
+
+.counttd{
+    width:10%;
+}
+
+.removetd{
+    width:10%;
+}
+
+.removetd > a{
+    color:#c0c0c0;
+}
