@@ -11,7 +11,7 @@
   <h2>{{ deck.name }}</h2>
   <div style="display:flex;justify-content:flex-end;align-items:center;">
     <small style="margin-right:1.5em">{{ deck.legality }}</small>
-    {% if not current_user.is_anonymous %}
+    {% if not current_user.is_anonymous and current_user.username == user.username %}
     <button type="button" class="btn btn-primary" id="edit">Edit Deck</button>
     {% endif %}
   </div>
@@ -51,7 +51,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Creature');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -69,7 +69,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Instant');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -87,7 +87,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Sorcery');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -107,7 +107,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Artifact');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -125,7 +125,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Enchantment');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -143,7 +143,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Land');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
@@ -161,7 +161,7 @@
 	      <td class="nametd"><span>{{ val[0].name }}</span></td>
 	      <td class="counttd"><span id="count_{{ key }}">{{ val[1] }}</span></td>
 	      <td class="removetd">
-		{% if not current_user.is_anonymous %}
+		{% if not current_user.is_anonymous and current_user.username == user.username %}
 		<a href="javascript:remove_card('{{ deck.pk }}', '{{ key }}', 'Planeswalker');">
 		  <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 		</a>
