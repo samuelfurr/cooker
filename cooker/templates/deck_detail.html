@@ -239,6 +239,7 @@
 				animation: 'false',
 				container: $elem,
 				content: data,
+				placement: 'auto',
 			    }).popover('show');
 			}
 		    });
@@ -260,7 +261,6 @@
 		}
 	    }
 	);
-	$('.nametd').on("show.bs.popover", function(){ $(this).data("bs.popover").tip().css("max-width", "600px"); });
     });
 
 function add_card(deckpk, cardBox, cardCount){
@@ -305,6 +305,7 @@ function add_card(deckpk, cardBox, cardCount){
 				animation: 'false',
 				container: 'body',
 				content: data,
+				placement: 'auto',				
 			    }).popover('show');
 			}
 		    });
@@ -326,7 +327,6 @@ function add_card(deckpk, cardBox, cardCount){
 		}
 	    }
 	    );
-	    $td.on("show.bs.popover", function(){ $(this).data("bs.popover").tip().css("max-width", "600px"); });
 	    if($(response['type']).find('tbody').length == 0){
 		$(response['type']).append('<tbody>');
 	    }
