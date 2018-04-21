@@ -6,7 +6,7 @@ from cooker import db
 from cooker.forms import LoginForm, RegistrationForm, DeckForm
 from cooker.models import *
 import pdb
-
+import requests, json
 
 def add_to_deck(deck, card, c):
     new = True
@@ -73,6 +73,7 @@ def add_to_deck(deck, card, c):
             deck.planeswalkers[key] = [card, c]
         deck.save()
         return [deck.planeswalkers[key][1], new]
+
 
 @cooker.route('/')
 @cooker.route('/index')
@@ -211,3 +212,13 @@ def card_autocomplete():
     if search:
         results.append(Card.objects(name__istartswith=search).distinct('name')[0:9])
     return jsonify(results)
+
+@cooker.route('/card_image', methods=['POST'])
+def card_image():
+    card = Card.objects(pk=request.form['card_pk']).first_or_404()
+    c = card.multiverseid
+    r = requests.get('https://api.scryfall.com/cards/multiverse/{}'.format(c))
+    if r.status_code != 200:
+        abort(404)
+    img_url = json.loads(r.content.decode('utf-8-sig'))['image_uris']['normal']
+    return render_template('card_popup.html', img_url=img_url)
